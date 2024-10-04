@@ -12,4 +12,4 @@ In this I have added Login authentication which returns JWT Token which is neede
 
 ## Future enhancment
 Connect database for LoginID and Password verification 
-Create image of this code (Dockerise)
+Create Docker image of this code (Dockerise)
