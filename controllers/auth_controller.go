@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"find-pairs/config"
-	"find-pairs/models"
 
 	"github.com/dgrijalva/jwt-go"
 	"github.com/go-playground/validator/v10"
@@ -49,9 +48,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	user := models.User{}
-	// user model's function Authenticate()
-	if user.Authenticate(req.Username, req.Password) {
+	if CredentialAuthenticate(req.Username, req.Password) {
 		token, err := generateJWT(req.Username)
 		if err != nil {
 			http.Error(w, "Could not generate token", http.StatusInternalServerError)
@@ -61,4 +58,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	} else {
 		http.Error(w, "Invalid credentials", http.StatusUnauthorized)
 	}
+}
+func CredentialAuthenticate(username, password string) bool {
+	return username == config.Username && password == config.Password
 }
