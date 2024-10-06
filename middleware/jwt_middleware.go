@@ -12,6 +12,10 @@ import (
 
 func JwtAuthMiddleware(next http.HandlerFunc) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodPost {
+			http.Error(w, "Only POST method is allowed", http.StatusMethodNotAllowed)
+			return
+		}
 		authorizationHeader := r.Header.Get("Authorization")
 		if authorizationHeader == "" {
 			http.Error(w, "Authorization header missing", http.StatusUnauthorized)
